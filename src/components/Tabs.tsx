@@ -27,10 +27,10 @@ export default function DashboardTabs({ tabs }: DashboardTabsProps) {
               key={tab.key}
               className={({ selected }) =>
                 classNames(
-                  "w-full rounded-lg py-2.5 text-sm font-medium leading-5",
-                  "focus:outline-none focus:ring-2 ring-offset-2 ring-offset-blue-400 ring-white ring-opacity-60",
+                  "cursor-pointer w-full rounded-lg py-2.5 text-sm font-medium leading-5",
+                  "focus:outline-none",
                   selected
-                    ? "bg-white dark:bg-gray-800 shadow text-blue-700 dark:text-blue-400"
+                    ? "bg-white dark:bg-gray-800 shadow text-blue-700 dark:text-blue-400 border border-blue-500"
                     : "text-gray-700 dark:text-gray-400 hover:bg-white/[0.12] hover:text-blue-700 dark:hover:text-blue-400"
                 )
               }

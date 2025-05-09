@@ -60,3 +60,14 @@ export interface DashboardData {
   tickers: Ticker[];
   orders: OrderHistory[];
 }
+
+// 매매 신호 로그 타입 (서버 API 응답 기반)
+export interface SignalLog {
+  timestamp: string; // ISO 8601 형식
+  market: string;
+  action: "buy" | "sell" | "hold";
+  price?: number; // 매수 또는 매도 결정 시의 가격
+  score: number;
+  reason: string;
+  // 서버의 SignalLog에 indicators 등이 있다면 여기에 추가 가능
+}

@@ -1,3 +1,4 @@
+import { useRouter } from "next/navigation";
 import { Account } from "../types";
 
 interface DetailedAssetInfoProps {
@@ -7,6 +8,7 @@ interface DetailedAssetInfoProps {
 export default function DetailedAssetInfo({
   accounts,
 }: DetailedAssetInfoProps) {
+  const router = useRouter();
   // 총 보유 자산 계산 (KRW 기준)
   const totalAsset = accounts.reduce((total, account) => {
     // KRW 계좌는 그대로 더함
@@ -61,8 +63,16 @@ export default function DetailedAssetInfo({
             <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
               {accounts.map((account) => (
                 <tr
+                  onClick={() => {
+                    if (account.currency === "KRW") {
+                      return;
+                    }
+                    router.push(
+                      `/coin/${account.unit_currency}-${account.currency}`
+                    );
+                  }}
                   key={account.currency}
-                  className="hover:bg-gray-50 dark:hover:bg-gray-700"
+                  className="hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer"
                 >
                   <td className="px-4 py-3 whitespace-nowrap">
                     <div className="flex items-center">

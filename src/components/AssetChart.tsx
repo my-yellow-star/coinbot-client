@@ -147,34 +147,36 @@ export default function AssetChart({ accounts, tickers }: AssetChartProps) {
                 </tr>
               </thead>
               <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
-                {assets.map((asset) => (
-                  <tr
-                    key={asset.currency}
-                    className="hover:bg-gray-50 dark:hover:bg-gray-700"
-                  >
-                    <td className="px-2 py-2 whitespace-nowrap">
-                      {asset.currency}
-                    </td>
-                    <td className="px-2 py-2 whitespace-nowrap">
-                      {new Intl.NumberFormat("ko-KR", {
-                        style: "currency",
-                        currency: "KRW",
-                        maximumFractionDigits: 0,
-                      }).format(asset.currentValue)}
-                    </td>
-                    <td
-                      className={`px-2 py-2 whitespace-nowrap ${
-                        asset.profitRate > 0
-                          ? "text-green-600"
-                          : asset.profitRate < 0
-                          ? "text-red-600"
-                          : ""
-                      }`}
+                {assets
+                  .sort((a, b) => b.currentValue - a.currentValue)
+                  .map((asset) => (
+                    <tr
+                      key={asset.currency}
+                      className="hover:bg-gray-50 dark:hover:bg-gray-700"
                     >
-                      {asset.profitRate.toFixed(2)}%
-                    </td>
-                  </tr>
-                ))}
+                      <td className="px-2 py-2 whitespace-nowrap">
+                        {asset.currency}
+                      </td>
+                      <td className="px-2 py-2 whitespace-nowrap">
+                        {new Intl.NumberFormat("ko-KR", {
+                          style: "currency",
+                          currency: "KRW",
+                          maximumFractionDigits: 0,
+                        }).format(asset.currentValue)}
+                      </td>
+                      <td
+                        className={`px-2 py-2 whitespace-nowrap ${
+                          asset.profitRate > 0
+                            ? "text-green-600"
+                            : asset.profitRate < 0
+                            ? "text-red-600"
+                            : ""
+                        }`}
+                      >
+                        {asset.profitRate.toFixed(2)}%
+                      </td>
+                    </tr>
+                  ))}
                 <tr className="hover:bg-gray-50 dark:hover:bg-gray-700">
                   <td className="px-2 py-2 whitespace-nowrap">KRW</td>
                   <td className="px-2 py-2 whitespace-nowrap">

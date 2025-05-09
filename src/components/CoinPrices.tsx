@@ -1,5 +1,6 @@
 import { Market, Ticker } from "../types";
 import { useState } from "react";
+import Link from "next/link";
 
 interface CoinPricesProps {
   markets: Market[];
@@ -64,32 +65,34 @@ export default function CoinPrices({
               key={ticker.market}
               className="py-3 px-4 hover:bg-gray-50 dark:hover:bg-gray-700"
             >
-              <div className="flex justify-between items-center">
-                <div>
-                  <p className="font-medium">{ticker.marketName}</p>
-                  <p className="text-xs text-gray-500">{ticker.market}</p>
+              <Link href={`/coin/${ticker.market}`} className="block">
+                <div className="flex justify-between items-center">
+                  <div>
+                    <p className="font-medium">{ticker.marketName}</p>
+                    <p className="text-xs text-gray-500">{ticker.market}</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="font-medium">
+                      {new Intl.NumberFormat("ko-KR", {
+                        style: "currency",
+                        currency: "KRW",
+                        maximumFractionDigits: 0,
+                      }).format(ticker.trade_price)}
+                    </p>
+                    <p
+                      className={`text-xs ${
+                        ticker.signed_change_rate > 0
+                          ? "text-green-600"
+                          : ticker.signed_change_rate < 0
+                          ? "text-red-600"
+                          : "text-gray-500"
+                      }`}
+                    >
+                      {(ticker.signed_change_rate * 100).toFixed(2)}%
+                    </p>
+                  </div>
                 </div>
-                <div className="text-right">
-                  <p className="font-medium">
-                    {new Intl.NumberFormat("ko-KR", {
-                      style: "currency",
-                      currency: "KRW",
-                      maximumFractionDigits: 0,
-                    }).format(ticker.trade_price)}
-                  </p>
-                  <p
-                    className={`text-xs ${
-                      ticker.signed_change_rate > 0
-                        ? "text-green-600"
-                        : ticker.signed_change_rate < 0
-                        ? "text-red-600"
-                        : "text-gray-500"
-                    }`}
-                  >
-                    {(ticker.signed_change_rate * 100).toFixed(2)}%
-                  </p>
-                </div>
-              </div>
+              </Link>
             </li>
           ))}
         </ul>
@@ -141,7 +144,10 @@ export default function CoinPrices({
             {filteredData.map((ticker) => (
               <tr
                 key={ticker.market}
-                className="hover:bg-gray-50 dark:hover:bg-gray-700"
+                className="hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer"
+                onClick={() =>
+                  (window.location.href = `/coin/${ticker.market}`)
+                }
               >
                 <td className="px-4 py-3 whitespace-nowrap">
                   <div className="flex items-center">

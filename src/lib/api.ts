@@ -1,6 +1,6 @@
 import { DashboardData } from "../types";
 
-const API_BASE_URL = "http://localhost:8080/api";
+const API_BASE_URL = `${process.env.NEXT_PUBLIC_API_URL}/api`;
 
 // 대시보드 데이터 가져오기
 export async function fetchDashboardData(): Promise<DashboardData> {
